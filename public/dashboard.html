@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - AgroMarket</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><i class="fas fa-seedling"></i> AgroMarket</a>
+        <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="products.html"><i class="fas fa-store"></i> Products</a></li>
+            <li id="cartNav" class="hidden"><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a></li>
+            <li id="authButtons" class="hidden"></li>
+            <li id="userMenu" class="hidden">
+                <span class="user-info"><i class="fas fa-user-circle"></i> <span id="userName"></span></span>
+                <button onclick="logout()" class="btn btn-danger">Logout</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-user">
+            <div class="sidebar-avatar"><i class="fas fa-user-circle"></i></div>
+            <div class="sidebar-user-info">
+                <strong id="sidebarName">Loading...</strong>
+                <span id="sidebarRole" class="role-badge"></span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" data-tab="overview" onclick="showTab('overview', this)">
+                <i class="fas fa-chart-pie"></i> Overview
+            </a>
+            <!-- Farmer links -->
+            <div id="farmerLinks">
+                <a href="add-product.html" class="sidebar-link">
+                    <i class="fas fa-plus-circle"></i> Add Product
+                </a>
+                <a href="#" class="sidebar-link" data-tab="my-products" onclick="showTab('my-products', this)">
+                    <i class="fas fa-box-open"></i> My Products
+                </a>
+                <a href="#" class="sidebar-link" data-tab="orders" onclick="showTab('orders', this)">
+                    <i class="fas fa-clipboard-list"></i> Customer Orders
+                </a>
+            </div>
+            <!-- Customer links -->
+            <div id="customerLinks" class="hidden">
+                <a href="products.html" class="sidebar-link">
+                    <i class="fas fa-store"></i> Browse Products
+                </a>
+                <a href="cart.html" class="sidebar-link">
+                    <i class="fas fa-shopping-cart"></i> My Cart
+                </a>
+                <a href="#" class="sidebar-link" data-tab="orders" onclick="showTab('orders', this)">
+                    <i class="fas fa-history"></i> Order History
+                </a>
+            </div>
+            <a href="#" class="sidebar-link" data-tab="profile" onclick="showTab('profile', this)">
+                <i class="fas fa-user-cog"></i> Profile
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-main">
+        <!-- Overview Tab -->
+        <div class="tab-content active" id="tab-overview">
+            <div class="dashboard-header">
+                <h2>Dashboard Overview</h2>
+                <span id="dashWelcome"></span>
+            </div>
+            <div class="stats-grid" id="statsGrid">
+                <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+            </div>
+            <div class="recent-section" id="recentSection"></div>
+        </div>
+
+        <!-- My Products Tab (Farmer) -->
+        <div class="tab-content" id="tab-my-products">
+            <div class="dashboard-header">
+                <h2><i class="fas fa-box-open"></i> My Products</h2>
+                <a href="add-product.html" class="btn btn-primary"><i class="fas fa-plus"></i> Add Product</a>
+            </div>
+            <div id="myProductsList">
+                <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+            </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div class="tab-content" id="tab-orders">
+            <div class="dashboard-header">
+                <h2 id="ordersTitle"><i class="fas fa-clipboard-list"></i> Orders</h2>
+            </div>
+            <div id="ordersList">
+                <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div class="tab-content" id="tab-profile">
+            <div class="dashboard-header">
+                <h2><i class="fas fa-user-cog"></i> My Profile</h2>
+            </div>
+            <div class="profile-card" id="profileSection">
+                <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Edit Product Modal -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeEditModal()"><i class="fas fa-times"></i></button>
+        <h3><i class="fas fa-edit"></i> Edit Product</h3>
+        <form id="editForm" enctype="multipart/form-data">
+            <input type="hidden" id="editProductId" />
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Product Name *</label>
+                    <input type="text" id="editName" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Category *</label>
+                    <select id="editCategory" class="form-control" required>
+                        <option value="Fruits">Fruits</option>
+                        <option value="Vegetables">Vegetables</option>
+                        <option value="Grains">Grains</option>
+                        <option value="Pulses">Pulses</option>
+                        <option value="Seeds">Seeds</option>
+                        <option value="Spices">Spices</option>
+                        <option value="Dairy Products">Dairy Products</option>
+                        <option value="Organic Products">Organic Products</option>
+                        <option value="Fertilizers">Fertilizers</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Price (₹) *</label>
+                    <input type="number" id="editPrice" class="form-control" step="0.01" min="0" required />
+                </div>
+                <div class="form-group">
+                    <label>Quantity *</label>
+                    <input type="number" id="editQuantity" class="form-control" min="0" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="editDescription" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Product Image (optional)</label>
+                <input type="file" id="editImage" class="form-control" accept="image/*" />
+            </div>
+            <div id="editMessage" class="message-box hidden"></div>
+            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-save"></i> Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroMarket - Online Agriculture Marketplace</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <i class="fas fa-seedling"></i> AgroMarket
+        </a>
+        <button class="nav-toggle" id="navToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="products.html"><i class="fas fa-store"></i> Products</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li id="cartNav"><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a></li>
+            <li id="dashboardNav" class="hidden"><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li id="authButtons">
+                <a href="login.html" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="btn btn-primary"><i class="fas fa-user-plus"></i> Register</a>
+            </li>
+            <li id="userMenu" class="hidden">
+                <span class="user-info"><i class="fas fa-user-circle"></i> <span id="userName"></span></span>
+                <button onclick="logout()" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">🌾 Fresh From The Farm</div>
+        <h1>Fresh Farm Products <br><span>Delivered to Your Door</span></h1>
+        <p>Connect directly with local farmers. Buy fresh, organic, and quality agricultural products at the best prices. Support local farming communities.</p>
+        <div class="hero-buttons">
+            <a href="products.html" class="btn btn-primary btn-lg"><i class="fas fa-shopping-basket"></i> Shop Now</a>
+            <a href="register.html" class="btn btn-outline btn-lg"><i class="fas fa-tractor"></i> Sell Products</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Products</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">200+</span>
+                <span class="stat-label">Farmers</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">5000+</span>
+                <span class="stat-label">Customers</span>
+            </div>
+        </div>
+    </div>
+    <div class="hero-image">
+        <div class="hero-img-container">
+            <div class="floating-card card-1">
+                <i class="fas fa-leaf"></i>
+                <span>100% Organic</span>
+            </div>
+            <div class="floating-card card-2">
+                <i class="fas fa-truck"></i>
+                <span>Fast Delivery</span>
+            </div>
+            <div class="floating-card card-3">
+                <i class="fas fa-shield-alt"></i>
+                <span>Quality Assured</span>
+            </div>
+            <div class="farm-emoji">🌾</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CATEGORIES SECTION ===== -->
+<section class="categories section" id="categories">
+    <div class="container">
+        <div class="section-header">
+            <h2>Shop by Category</h2>
+            <p>Explore our wide range of fresh agricultural products</p>
+        </div>
+        <div class="categories-grid">
+            <a href="products.html?category=Fruits" class="category-card">
+                <div class="category-icon">🍎</div>
+                <h3>Fruits</h3>
+                <span>Fresh &amp; Seasonal</span>
+            </a>
+            <a href="products.html?category=Vegetables" class="category-card">
+                <div class="category-icon">🥦</div>
+                <h3>Vegetables</h3>
+                <span>Farm Fresh</span>
+            </a>
+            <a href="products.html?category=Grains" class="category-card">
+                <div class="category-icon">🌾</div>
+                <h3>Grains</h3>
+                <span>Nutritious</span>
+            </a>
+            <a href="products.html?category=Pulses" class="category-card">
+                <div class="category-icon">🫘</div>
+                <h3>Pulses</h3>
+                <span>Protein Rich</span>
+            </a>
+            <a href="products.html?category=Seeds" class="category-card">
+                <div class="category-icon">🌱</div>
+                <h3>Seeds</h3>
+                <span>High Yielding</span>
+            </a>
+            <a href="products.html?category=Spices" class="category-card">
+                <div class="category-icon">🌶️</div>
+                <h3>Spices</h3>
+                <span>Pure &amp; Aromatic</span>
+            </a>
+            <a href="products.html?category=Dairy Products" class="category-card">
+                <div class="category-icon">🥛</div>
+                <h3>Dairy</h3>
+                <span>Fresh Daily</span>
+            </a>
+            <a href="products.html?category=Organic Products" class="category-card">
+                <div class="category-icon">🌿</div>
+                <h3>Organic</h3>
+                <span>Chemical Free</span>
+            </a>
+            <a href="products.html?category=Fertilizers" class="category-card">
+                <div class="category-icon">🪣</div>
+                <h3>Fertilizers</h3>
+                <span>Soil Enriching</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FEATURED PRODUCTS ===== -->
+<section class="featured-products section" id="featured">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Products</h2>
+            <p>Handpicked fresh products from our trusted farmers</p>
+            <a href="products.html" class="btn btn-outline">View All Products <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="products-grid" id="featuredProducts">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i> Loading products...
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== WHY CHOOSE US ===== -->
+<section class="features section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why Choose AgroMarket?</h2>
+            <p>We bridge the gap between farmers and consumers</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-seedling"></i></div>
+                <h3>Farm Fresh</h3>
+                <p>Get products directly from farms, ensuring maximum freshness and nutritional value.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                <h3>Best Prices</h3>
+                <p>No middlemen. Buy directly from farmers at fair and competitive prices.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                <h3>Quality Assured</h3>
+                <p>All products are quality checked and verified before listing on our platform.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-truck-fast"></i></div>
+                <h3>Fast Delivery</h3>
+                <p>Quick and reliable delivery to your doorstep within the promised timeframe.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-users"></i></div>
+                <h3>Support Farmers</h3>
+                <p>Your purchases directly support local farming communities and their livelihoods.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+                <h3>Organic Options</h3>
+                <p>Wide selection of certified organic products grown without harmful chemicals.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CALL TO ACTION BANNER ===== -->
+<section class="section" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; text-align: center; padding: 60px 20px;">
+    <div class="container">
+        <h2 style="color: white; margin-bottom: 16px;">Direct From Farm to Your Kitchen</h2>
+        <p style="color: rgba(255,255,255,0.9); max-width: 650px; margin: 0 auto 28px; font-size: 1.1rem;">
+            Support hard-working local farmers while enjoying the healthiest, freshest organic agricultural products at honest prices.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="products.html" class="btn btn-lg" style="background: var(--accent); color: var(--primary-dark); font-weight: 700;">
+                <i class="fas fa-shopping-basket"></i> Start Shopping
+            </a>
+            <a href="register.html" class="btn btn-outline btn-lg" style="border-color: white; color: white;">
+                <i class="fas fa-tractor"></i> Join as Farmer
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="logo"><i class="fas fa-seedling"></i> AgroMarket</a>
+                <p>Bridging the gap between farmers and consumers for a sustainable agricultural future.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>For Farmers</h4>
+                <ul>
+                    <li><a href="register.html">Register as Farmer</a></li>
+                    <li><a href="dashboard.html">Farmer Dashboard</a></li>
+                    <li><a href="add-product.html">Add Products</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="products.html?category=Fruits">Fruits</a></li>
+                    <li><a href="products.html?category=Vegetables">Vegetables</a></li>
+                    <li><a href="products.html?category=Grains">Grains</a></li>
+                    <li><a href="products.html?category=Organic Products">Organic Products</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AgroMarket. All rights reserved. Made with ❤️ for Indian Farmers.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+    // Load featured products
+    async function loadFeaturedProducts() {
+        const container = document.getElementById('featuredProducts');
+        try {
+            const response = await fetch('/api/products?limit=8');
+            const data = await response.json();
+            let products = (data && data.success && Array.isArray(data.products) && data.products.length > 0)
+                ? data.products
+                : (typeof DEFAULT_PRODUCTS !== 'undefined' ? DEFAULT_PRODUCTS : []);
+
+            if (products.length > 0) {
+                container.innerHTML = products.slice(0, 8).map(p => createProductCard(p)).join('');
+            } else {
+                container.innerHTML = '<p class="no-products">No products available yet.</p>';
+            }
+        } catch (err) {
+            if (typeof DEFAULT_PRODUCTS !== 'undefined' && DEFAULT_PRODUCTS.length > 0) {
+                container.innerHTML = DEFAULT_PRODUCTS.slice(0, 8).map(p => createProductCard(p)).join('');
+            } else {
+                container.innerHTML = '<p class="no-products">Could not load products.</p>';
+            }
+        }
+    }
+
+    loadFeaturedProducts();
+    updateCartBadge();
+    checkAuth();
+</script>
+</body>
+</html>

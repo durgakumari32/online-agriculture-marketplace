@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - AgroMarket</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="auth-page">
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><i class="fas fa-seedling"></i> AgroMarket</a>
+    </div>
+</nav>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-icon"><i class="fas fa-seedling"></i></div>
+            <h2>Welcome Back!</h2>
+            <p>Login to your AgroMarket account</p>
+        </div>
+
+        <div id="messageBox" class="message-box hidden"></div>
+
+        <form id="loginForm" class="auth-form">
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email" required class="form-control" />
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Enter your password" required class="form-control" />
+                    <button type="button" class="toggle-pass" onclick="togglePassword('password', this)">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="register.html">Register Here</a></p>
+        </div>
+
+        <div class="demo-credentials">
+            <h4><i class="fas fa-info-circle"></i> Demo Credentials</h4>
+            <div class="demo-cards">
+                <div class="demo-card" onclick="fillDemo('farmer')">
+                    <i class="fas fa-tractor"></i>
+                    <strong>Farmer</strong>
+                    <small>raju@farmer.com<br/>farmer123</small>
+                </div>
+                <div class="demo-card" onclick="fillDemo('customer')">
+                    <i class="fas fa-user"></i>
+                    <strong>Customer</strong>
+                    <small>anil@customer.com<br/>farmer123</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+    // Redirect if already logged in
+    checkAuth().then(user => {
+        if (user) {
+            window.location.href = user.role === 'Farmer' ? 'dashboard.html' : 'products.html';
+        }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('loginBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
+        try {
+            const response = await fetch('/api/users/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: document.getElementById('email').value.trim(),
+                    password: document.getElementById('password').value
+                })
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                showMessage('messageBox', data.message, 'success');
+                localStorage.setItem('agro_user', JSON.stringify(data.user));
+                setTimeout(() => {
+                    window.location.href = data.user.role === 'Farmer' ? 'dashboard.html' : 'products.html';
+                }, 1000);
+            } else {
+                showMessage('messageBox', data.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+            }
+        } catch (err) {
+            showMessage('messageBox', 'Connection error. Please try again.', 'error');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+        }
+    });
+
+    function fillDemo(type) {
+        if (type === 'farmer') {
+            document.getElementById('email').value = 'raju@farmer.com';
+            document.getElementById('password').value = 'farmer123';
+        } else {
+            document.getElementById('email').value = 'anil@customer.com';
+            document.getElementById('password').value = 'farmer123';
+        }
+    }
+</script>
+</body>
+</html>

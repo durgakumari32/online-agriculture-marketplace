@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - AgroMarket</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <i class="fas fa-seedling"></i> AgroMarket
+        </a>
+        <button class="nav-toggle" id="navToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="products.html"><i class="fas fa-store"></i> Products</a></li>
+            <li><a href="about.html" class="active"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li id="cartNav"><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a></li>
+            <li id="dashboardNav" class="hidden"><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li id="authButtons">
+                <a href="login.html" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="btn btn-primary"><i class="fas fa-user-plus"></i> Register</a>
+            </li>
+            <li id="userMenu" class="hidden">
+                <span class="user-info"><i class="fas fa-user-circle"></i> <span id="userName"></span></span>
+                <button onclick="logout()" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ===== PAGE HEADER ===== -->
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-info-circle"></i> About AgroMarket</h1>
+        <p>Empowering farmers and bringing fresh, sustainable produce to every household</p>
+    </div>
+</div>
+
+<!-- ===== ABOUT MAIN STORY ===== -->
+<section class="section about-main">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-content">
+                <span class="section-tag">Our Story & Mission</span>
+                <h2>Revolutionizing Agriculture by Eliminating Middlemen</h2>
+                <p>AgroMarket was founded with a singular, transformative vision: to connect hard-working farmers directly with households, restaurants, and grocery retailers across the nation. For decades, traditional agricultural supply chains have relied on multiple layers of intermediaries, resulting in reduced profits for growers and inflated prices with stale produce for consumers.</p>
+                <p>By leveraging modern digital technology, AgroMarket provides a transparent marketplace where farmers list their harvested produce at fair prices, and consumers receive farm-fresh fruits, vegetables, grains, and organic goods directly at their doorstep.</p>
+                
+                <div class="about-features">
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Direct-from-Farm Sourcing:</strong> Maximum freshness and nutritional retention.</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Fair Remuneration:</strong> Farmers receive 100% of their listed product revenue.</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Zero Artificial Preservatives:</strong> Strict quality checks and natural produce.</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Sustainable Farming:</strong> Supporting eco-friendly, organic farming practices.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-visual">
+                <div class="about-img-box">
+                    <div class="about-stat">
+                        <i class="fas fa-tractor"></i>
+                        <div>
+                            <span class="num">200+</span>
+                            <span>Verified Farmers</span>
+                        </div>
+                    </div>
+                    <div class="about-stat">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <span class="num">50+</span>
+                            <span>Regions Connected</span>
+                        </div>
+                    </div>
+                    <div class="about-stat">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <span class="num">4.9★</span>
+                            <span>Customer Satisfaction</span>
+                        </div>
+                    </div>
+                    <div class="about-stat">
+                        <i class="fas fa-box-open"></i>
+                        <div>
+                            <span class="num">10,000+</span>
+                            <span>Orders Delivered</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CORE VALUES ===== -->
+<section class="section features" style="background: var(--bg-light);">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Guiding Principles</h2>
+            <p>The foundation of everything we build and deliver</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                <h3>Farmer Welfare</h3>
+                <p>We believe when farmers thrive, nations prosper. We offer digital tools that empower farming families with regular income.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-award"></i></div>
+                <h3>Uncompromising Quality</h3>
+                <p>Only freshly harvested, well-graded products make it to our platform so families enjoy pristine nutrition.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-balance-scale"></i></div>
+                <h3>Price Transparency</h3>
+                <p>Complete visibility for both parties. No hidden markups or unfair broker commissions.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CALL TO ACTION ===== -->
+<section class="section text-center" style="background: white;">
+    <div class="container">
+        <h2>Ready to Experience Farm Freshness?</h2>
+        <p style="color: var(--text-light); max-width: 600px; margin: 12px auto 28px;">
+            Whether you are a customer looking for wholesome food or a farmer looking to grow your business, join AgroMarket today.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="products.html" class="btn btn-primary btn-lg"><i class="fas fa-store"></i> Browse Store</a>
+            <a href="register.html" class="btn btn-outline btn-lg"><i class="fas fa-tractor"></i> Become a Seller</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="logo"><i class="fas fa-seedling"></i> AgroMarket</a>
+                <p>Bridging the gap between farmers and consumers for a sustainable agricultural future.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>For Farmers</h4>
+                <ul>
+                    <li><a href="register.html">Register as Farmer</a></li>
+                    <li><a href="dashboard.html">Farmer Dashboard</a></li>
+                    <li><a href="add-product.html">Add Products</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="products.html?category=Fruits">Fruits</a></li>
+                    <li><a href="products.html?category=Vegetables">Vegetables</a></li>
+                    <li><a href="products.html?category=Grains">Grains</a></li>
+                    <li><a href="products.html?category=Organic Products">Organic Products</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AgroMarket. All rights reserved. Made with ❤️ for Indian Farmers.</p>
+        </div>
+    </div>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/main.js"></script>
+<script>
+    checkAuth();
+    updateCartBadge();
+</script>
+</body>
+</html>

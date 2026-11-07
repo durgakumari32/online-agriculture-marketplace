@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Product - AgroMarket</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><i class="fas fa-seedling"></i> AgroMarket</a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-arrow-left"></i> Dashboard</a></li>
+            <li id="userMenu" class="hidden">
+                <span class="user-info"><i class="fas fa-user-circle"></i> <span id="userName"></span></span>
+                <button onclick="logout()" class="btn btn-danger">Logout</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-plus-circle"></i> Add New Product</h1>
+        <p>List your fresh agricultural product on AgroMarket</p>
+    </div>
+</div>
+
+<section class="add-product-page section">
+    <div class="container">
+        <div class="form-card">
+            <div id="messageBox" class="message-box hidden"></div>
+            <form id="addProductForm" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-box"></i> Product Name *</label>
+                        <input type="text" id="product_name" class="form-control" placeholder="e.g. Fresh Mangoes" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-tags"></i> Category *</label>
+                        <select id="category" class="form-control" required>
+                            <option value="">-- Select Category --</option>
+                            <option value="Fruits">🍎 Fruits</option>
+                            <option value="Vegetables">🥦 Vegetables</option>
+                            <option value="Grains">🌾 Grains</option>
+                            <option value="Pulses">🫘 Pulses</option>
+                            <option value="Seeds">🌱 Seeds</option>
+                            <option value="Spices">🌶️ Spices</option>
+                            <option value="Dairy Products">🥛 Dairy Products</option>
+                            <option value="Organic Products">🌿 Organic Products</option>
+                            <option value="Fertilizers">🪣 Fertilizers</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-rupee-sign"></i> Price per Unit (₹) *</label>
+                        <input type="number" id="price" class="form-control" placeholder="e.g. 50" min="0" step="0.01" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-boxes"></i> Available Quantity *</label>
+                        <input type="number" id="quantity" class="form-control" placeholder="e.g. 100" min="1" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> Product Description</label>
+                    <textarea id="description" class="form-control" rows="4"
+                        placeholder="Describe your product: quality, harvest date, special features..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-image"></i> Product Image (optional, max 5MB)</label>
+                    <div class="image-upload-box" id="imageUploadBox">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload or drag &amp; drop</p>
+                        <small>JPEG, PNG, GIF, WEBP</small>
+                        <input type="file" id="image" accept="image/*" onchange="previewImage(this)" />
+                    </div>
+                    <div id="imagePreview" class="image-preview hidden">
+                        <img id="previewImg" src="" alt="Preview" />
+                        <button type="button" onclick="removeImage()" class="remove-img-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                        <i class="fas fa-upload"></i> Add Product
+                    </button>
+                    <a href="dashboard.html" class="btn btn-outline btn-lg">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/main.js"></script>
+<script>
+    // Redirect non-farmers
+    checkAuth().then(user => {
+        if (!user) { window.location.href = 'login.html'; return; }
+        if (user.role !== 'Farmer') { window.location.href = 'products.html'; return; }
+    });
+
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                document.getElementById('previewImg').src = e.target.result;
+                document.getElementById('imagePreview').classList.remove('hidden');
+                document.getElementById('imageUploadBox').classList.add('hidden');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function removeImage() {
+        document.getElementById('image').value = '';
+        document.getElementById('imagePreview').classList.add('hidden');
+        document.getElementById('imageUploadBox').classList.remove('hidden');
+    }
+
+    document.getElementById('addProductForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding Product...';
+
+        const formData = new FormData();
+        formData.append('product_name', document.getElementById('product_name').value.trim());
+        formData.append('category',     document.getElementById('category').value);
+        formData.append('price',        document.getElementById('price').value);
+        formData.append('quantity',     document.getElementById('quantity').value);
+        formData.append('description',  document.getElementById('description').value.trim());
+
+        const imageFile = document.getElementById('image').files[0];
+        if (imageFile) formData.append('image', imageFile);
+
+        try {
+            const response = await fetch('/api/products', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            if (data.success) {
+                showMessage('messageBox', data.message, 'success');
+                setTimeout(() => window.location.href = 'dashboard.html', 1500);
+            } else {
+                showMessage('messageBox', data.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-upload"></i> Add Product';
+            }
+        } catch (err) {
+            showMessage('messageBox', 'Error adding product. Please try again.', 'error');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-upload"></i> Add Product';
+        }
+    });
+</script>
+</body>
+</html>

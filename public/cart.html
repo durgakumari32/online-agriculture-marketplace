@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart - AgroMarket</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><i class="fas fa-seedling"></i> AgroMarket</a>
+        <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="products.html"><i class="fas fa-store"></i> Products</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="cart.html" class="active"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a></li>
+            <li id="dashboardNav" class="hidden"><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li id="authButtons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+            </li>
+            <li id="userMenu" class="hidden">
+                <span class="user-info"><i class="fas fa-user-circle"></i> <span id="userName"></span></span>
+                <button onclick="logout()" class="btn btn-danger">Logout</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-shopping-cart"></i> Shopping Cart</h1>
+        <p>Review your selected products</p>
+    </div>
+</div>
+
+<section class="cart-page section">
+    <div class="container">
+        <div class="cart-layout" id="cartLayout">
+            <!-- Dynamic content -->
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-bottom">
+            <p>&copy; 2024 AgroMarket. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/main.js"></script>
+<script>
+    function renderCart() {
+        const cart = getCart();
+        const layout = document.getElementById('cartLayout');
+        updateCartBadge();
+
+        if (cart.length === 0) {
+            layout.innerHTML = `
+                <div class="empty-cart">
+                    <div class="empty-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <h3>Your cart is empty!</h3>
+                    <p>Browse our fresh products and add items to your cart.</p>
+                    <a href="products.html" class="btn btn-primary"><i class="fas fa-store"></i> Shop Now</a>
+                </div>`;
+            return;
+        }
+
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        const delivery = subtotal > 500 ? 0 : 50;
+        const total    = subtotal + delivery;
+
+        layout.innerHTML = `
+            <div class="cart-items-section">
+                <div class="cart-header-row">
+                    <h3>Cart Items (${cart.length})</h3>
+                    <button onclick="clearAllCart()" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Clear All</button>
+                </div>
+                <div id="cartItemsList">
+                    ${cart.map(item => `
+                        <div class="cart-item" id="cartItem-${item.product_id}">
+                            <div class="cart-item-img">
+                                <img src="${typeof getProductImage === 'function' ? getProductImage(item) : (item.image_url || '')}" alt="${item.product_name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&auto=format&fit=crop&q=80';" />
+                            </div>
+                            <div class="cart-item-info">
+                                <h4>${item.product_name}</h4>
+                                <span class="cart-item-category">${item.category}</span>
+                                <span class="cart-item-farmer"><i class="fas fa-user-tie"></i> ${item.farmer_name || 'Farmer'}</span>
+                            </div>
+                            <div class="cart-item-qty">
+                                <button onclick="updateCartQty(${item.product_id}, ${item.qty - 1})"><i class="fas fa-minus"></i></button>
+                                <span>${item.qty}</span>
+                                <button onclick="updateCartQty(${item.product_id}, ${item.qty + 1})"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <div class="cart-item-price">
+                                <span class="unit-price">₹${parseFloat(item.price).toFixed(2)} × ${item.qty}</span>
+                                <strong>₹${(item.price * item.qty).toFixed(2)}</strong>
+                            </div>
+                            <button class="cart-item-remove" onclick="removeFromCart(${item.product_id})">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="cart-summary-section">
+                <div class="cart-summary-card">
+                    <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                    <div class="summary-row"><span>Subtotal</span><span>₹${subtotal.toFixed(2)}</span></div>
+                    <div class="summary-row"><span>Delivery</span><span>${delivery === 0 ? '<span class="free-label">FREE</span>' : '₹' + delivery.toFixed(2)}</span></div>
+                    ${delivery > 0 ? '<p class="free-hint">Add ₹' + (500 - subtotal).toFixed(2) + ' more for free delivery!</p>' : ''}
+                    <hr>
+                    <div class="summary-row total-row"><span>Total</span><strong>₹${total.toFixed(2)}</strong></div>
+                    <a href="checkout.html" class="btn btn-primary btn-block mt-2">
+                        <i class="fas fa-credit-card"></i> Proceed to Checkout
+                    </a>
+                    <a href="products.html" class="btn btn-outline btn-block mt-1">
+                        <i class="fas fa-arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
+            </div>`;
+    }
+
+    function updateCartQty(productId, newQty) {
+        if (newQty < 1) {
+            removeFromCart(productId);
+            return;
+        }
+        let cart = getCart();
+        const item = cart.find(i => i.product_id === productId);
+        if (item) {
+            item.qty = newQty;
+            saveCart(cart);
+            renderCart();
+        }
+    }
+
+    function clearAllCart() {
+        if (confirm('Clear all items from cart?')) {
+            saveCart([]);
+            renderCart();
+            showToast('Cart cleared', 'info');
+        }
+    }
+
+    checkAuth();
+    renderCart();
+</script>
+</body>
+</html>

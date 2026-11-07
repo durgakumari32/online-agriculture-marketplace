@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - AgroMarket</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <i class="fas fa-seedling"></i> AgroMarket
+        </a>
+        <button class="nav-toggle" id="navToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="products.html"><i class="fas fa-store"></i> Products</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li id="cartNav"><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a></li>
+            <li id="dashboardNav" class="hidden"><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li id="authButtons">
+                <a href="login.html" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="btn btn-primary"><i class="fas fa-user-plus"></i> Register</a>
+            </li>
+            <li id="userMenu" class="hidden">
+                <span class="user-info"><i class="fas fa-user-circle"></i> <span id="userName"></span></span>
+                <button onclick="logout()" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ===== PAGE HEADER ===== -->
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-headset"></i> Contact Us</h1>
+        <p>We are here to support our farmers and customers 24/7</p>
+    </div>
+</div>
+
+<!-- ===== CONTACT MAIN SECTION ===== -->
+<section class="contact-section section" style="background: var(--bg);">
+    <div class="container">
+        <div class="contact-grid">
+            <!-- Contact Details -->
+            <div class="contact-info">
+                <div class="card" style="margin-bottom: 24px;">
+                    <h3>Get in Touch</h3>
+                    <p style="color: var(--text-mid); margin-bottom: 24px;">
+                        Have questions about product availability, logistics, farmer partnerships, or wholesale orders? Reach out and our support staff will assist promptly.
+                    </p>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Headquarters</h4>
+                            <p>Farm House, Agriculture Corridor, Green Valley, New Delhi, India - 110001</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Call / WhatsApp</h4>
+                            <p>+91 98765 43210 / +91 91234 56789</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email Enquiries</h4>
+                            <p>support@agromarket.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Working Hours</h4>
+                            <p>Monday – Saturday: 7:00 AM – 9:00 PM IST</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Farmer Helpline Callout -->
+                <div class="card" style="border-left: 4px solid var(--primary); background: #eef7ee;">
+                    <h4 style="color: var(--primary); margin-bottom: 6px;"><i class="fas fa-tractor"></i> Dedicated Farmer Helpline</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-mid);">
+                        Are you a producer needing assistance listing your crop or managing orders? Call toll-free: <strong>1800-AGRO-FARM</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Contact Inquiry Form -->
+            <div class="card">
+                <h3 style="margin-bottom: 8px;"><i class="fas fa-paper-plane"></i> Send Us a Message</h3>
+                <p style="color: var(--text-light); margin-bottom: 24px; font-size: 0.95rem;">
+                    Fill out the form below and we will get back to you within 24 hours.
+                </p>
+
+                <div id="contactMsgBox" class="message-box hidden"></div>
+
+                <form class="contact-form" onsubmit="submitContactForm(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label style="font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; display: block;">Your Name *</label>
+                            <input type="text" id="contactName" placeholder="Full name" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; display: block;">Your Email *</label>
+                            <input type="email" id="contactEmail" placeholder="email@example.com" required class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label style="font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; display: block;">Phone Number</label>
+                            <input type="tel" id="contactPhone" placeholder="10-digit mobile" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; display: block;">Inquiry Type</label>
+                            <select id="contactType" class="form-control">
+                                <option value="Customer Support">Customer Support</option>
+                                <option value="Farmer Registration">Farmer Partnership / Registration</option>
+                                <option value="Bulk Order">Wholesale / Bulk Orders</option>
+                                <option value="Feedback">Feedback / Suggestions</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; display: block;">Subject *</label>
+                        <input type="text" id="contactSubject" placeholder="Brief subject" class="form-control" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; display: block;">Message *</label>
+                        <textarea id="contactMessage" placeholder="How can we help you?" rows="6" class="form-control" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="contactSubmitBtn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="logo"><i class="fas fa-seedling"></i> AgroMarket</a>
+                <p>Bridging the gap between farmers and consumers for a sustainable agricultural future.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>For Farmers</h4>
+                <ul>
+                    <li><a href="register.html">Register as Farmer</a></li>
+                    <li><a href="dashboard.html">Farmer Dashboard</a></li>
+                    <li><a href="add-product.html">Add Products</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="products.html?category=Fruits">Fruits</a></li>
+                    <li><a href="products.html?category=Vegetables">Vegetables</a></li>
+                    <li><a href="products.html?category=Grains">Grains</a></li>
+                    <li><a href="products.html?category=Organic Products">Organic Products</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AgroMarket. All rights reserved. Made with ❤️ for Indian Farmers.</p>
+        </div>
+    </div>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/main.js"></script>
+<script>
+    checkAuth();
+    updateCartBadge();
+
+    function submitContactForm(e) {
+        e.preventDefault();
+        const btn = document.getElementById('contactSubmitBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            showMessage('contactMsgBox', 'Thank you! Your message has been sent successfully. We will contact you soon.', 'success');
+            e.target.reset();
+            showToast('Message sent successfully!', 'success');
+        }, 800);
+    }
+</script>
+</body>
+</html>
